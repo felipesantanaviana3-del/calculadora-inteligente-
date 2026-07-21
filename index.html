@@ -25,6 +25,7 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       max-width: 350px;
       width: 100%;
+      position: relative;
     }
 
     h1 {
@@ -41,9 +42,11 @@
       align-items: center;
       justify-content: center;
       margin-top: 15px;
+      position: relative;
+      min-height: 120px;
     }
 
-    button, .btn {
+    button {
       width: 100%;
       max-width: 220px;
       padding: 12px 15px;
@@ -53,6 +56,7 @@
       border-radius: 10px;
       cursor: pointer;
       white-space: nowrap;
+      transition: all 0.2s ease;
     }
 
     .btn-sim {
@@ -63,19 +67,40 @@
     .btn-nao {
       background-color: #ff4d4d;
       color: white;
+      position: absolute;
+      top: 60px;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Você me perdoa? ❤️💔😢😭<br>🥺😔💔❤️</h1>
+  <div class="card" id="card">
+    <h1 id="titulo">Você me perdoa? ❤️💔😢😭<br>🥺😔💔❤️</h1>
     
     <div class="btn-container">
-      <button class="btn-sim">Eu te desculpo</button>
-      <button class="btn-nao">Não desculpo</button>
+      <button class="btn-sim" onclick="aceitou()">Eu te desculpo</button>
+      <button class="btn-nao" id="btnNao" onclick="fugir()" onmouseover="fugir()">Não desculpo</button>
     </div>
   </div>
+
+  <script>
+    function aceitou() {
+      document.getElementById('card').innerHTML = `
+        <h1 style="color: #ff4b72; font-size: 24px;">Te amo muito! ❤️🥰😍</h1>
+        <p style="color: #555; font-size: 16px;">Prometo te fazer a pessoa mais feliz do mundo!</p>
+      `;
+    }
+
+    function fugir() {
+      const btnNao = document.getElementById('btnNao');
+      const x = Math.floor(Math.random() * (window.innerWidth - 120));
+      const y = Math.floor(Math.random() * (window.innerHeight - 50));
+      
+      btnNao.style.position = 'fixed';
+      btnNao.style.left = x + 'px';
+      btnNao.style.top = y + 'px';
+    }
+  </script>
 
 </body>
 </html>
