@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o Meu Amor ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 24px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        #btn-sim {
+            background-color: #2ec4b6;
+            color: white;
+        }
+
+        #btn-sim:hover {
+            transform: scale(1.1);
+        }
+
+        #btn-nao {
+            background-color: #e63946;
+            color: white;
+            position: absolute;
+            right: 20px;
+        }
+
+        /* Mensagem escondida que aparece depois do sim */
+        #resposta {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ff4d6d;
+            font-weight: bold;
+        }
+
+        /* Mensagem para quando clica não */
+        #resposta-nao {
+            display: none;
+            margin-top: 20px;
+            font-size: 24px;
+            color: #e63946;
+            font-weight: bold;
+        }
+
+        .emojis-chorando {
+            animation: chuva 2s infinite;
+        }
+
+        @keyframes chuva {
+            0% {
+                opacity: 1;
+                transform: translateY(-100px);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(300px);
+            }
+        }
+
+        .emoji-fly {
+            position: fixed;
+            font-size: 40px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1 id="pergunta">Você me perdoa? ❤️💔😢😭🥺😔💔❤️</h1>
+        
+        <div class="buttons" id="painel-botoes">
+            <button id="btn-sim" onclick="perdoou()">Eu te desculpo</button>
+            <button id="btn-nao" onmouseover="fugir()" onclick="naoDesculpou()">Não desculpo</button>
+        </div>
+
+        <div id="resposta">
+            Eu sabia! 😌😌
+        </div>
+
+        <div id="resposta-nao">
+            Uhhhhhhh 🥺😔😭😭😭
+        </div>
+    </div>
+
+    <script>
+        function fugir() {
+            const btnNao = document.getElementById('btn-nao');
+            
+            // Gera posições aleatórias para o botão "Não" desviar do clique
+            const larguraJanela = window.innerWidth - 100;
+            const alturaJanela = window.innerHeight - 50;
+
+            const novaPosicaoX = Math.random() * larguraJanela;
+            const novaPosicaoY = Math.random() * alturaJanela;
+
+            btnNao.style.position = 'fixed';
+            btnNao.style.left = novaPosicaoX + 'px';
+            btnNao.style.top = novaPosicaoY + 'px';
+        }
+
+        function perdoou() {
+            document.getElementById('pergunta').innerText = "Você me desculpou! 🥰";
+            document.getElementById('painel-botoes').style.display = 'none';
+            document.getElementById('resposta').style.display = 'block';
+        }
+
+        function naoDesculpou() {
+            document.getElementById('painel-botoes').style.display = 'none';
+            document.getElementById('resposta-nao').style.display = 'block';
+            criarEmojisChorando();
+        }
+
+        function criarEmojisChorando() {
+            const emojis = ['🥺', '😔', '😭', '😭', '😭', '🥺', '😭', '😔'];
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'emoji-fly emojis-chorando';
+                    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.left = Math.random() * window.innerWidth + 'px';
+                    emoji.style.top = '-50px';
+                    document.body.appendChild(emoji);
+
+                    setTimeout(() => {
+                        emoji.remove();
+                    }, 2000);
+                }, i * 100);
+            }
+        }
+    </script>
+
+</body>
+</html>
