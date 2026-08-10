@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosso Momento Especial</title>
+    <title>Estoura Balões Especial</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+            /* Fundo azul vibrante e elegante */
+            background: linear-gradient(135deg, #1b4f72, #2980b9);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             height: 100vh;
@@ -28,7 +33,7 @@
             z-index: 1;
         }
 
-        /* HUD Moderno */
+        /* HUD (Placar e Tempo) */
         #hud {
             position: absolute;
             top: 20px;
@@ -52,14 +57,14 @@
             color: #f1c40f;
         }
 
-        /* Balão Aprimorado (Branco) */
+        /* Balão Branco com destaque 3D */
         .balao {
             position: absolute;
             width: 60px;
             height: 75px;
             background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e0e0e0 60%, #bdc3c7 100%);
             border-radius: 50% 50% 48% 50%;
-            box-shadow: inset -8px -10px 15px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: inset -8px -10px 15px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.3);
             transition: transform 0.1s ease;
             cursor: pointer;
             z-index: 5;
@@ -93,7 +98,7 @@
             opacity: 0;
         }
 
-        /* Telas Centrais */
+        /* Telas de Centro */
         .tela-centro {
             position: absolute;
             top: 50%;
@@ -116,4 +121,362 @@
             font-size: 28px;
         }
 
-        .btn-est
+        .btn-estilizado {
+            margin-top: 20px;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-estilizado:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(46, 204, 113, 0.6);
+        }
+
+        /* Contagem Inicial (1 a 5) */
+        #contador-inicial {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            z-index: 25;
+            display: none;
+        }
+
+        /* Animação do Ovo e do Papel Amassado */
+        #container-egg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+            background: rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+        }
+
+        .ovo-gigante {
+            position: absolute;
+            top: -200px;
+            width: 140px;
+            height: 180px;
+            background: radial-gradient(circle at 40% 30%, #ffffff 0%, #ecf0f1 70%, #bdc3c7 100%);
+            border-radius: 50% 50% 48% 48%;
+            box-shadow: inset -15px -20px 30px rgba(0,0,0,0.2), 0 15px 30px rgba(0,0,0,0.4);
+            transition: top 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .ovo-quebrado {
+            animation: tremer 0.2s ease infinite;
+        }
+
+        @keyframes tremer {
+            0% { transform: translate(2px, 2px) rotate(0deg); }
+            20% { transform: translate(-2px, -2px) rotate(-2deg); }
+            40% { transform: translate(-3px, 1px) rotate(2deg); }
+            60% { transform: translate(3px, 1px) rotate(0deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            100% { transform: translate(1px, 2px) rotate(-1deg); }
+        }
+
+        #personagem-recompensa {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            transform: scale(0.1);
+            opacity: 0;
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease;
+        }
+
+        #personagem-recompensa.crescer {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .avatar-boneco {
+            font-size: 80px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+        }
+
+        .papel-amassado {
+            background: #fffdf0;
+            padding: 25px 30px;
+            border-radius: 4px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            font-family: 'Courier New', Courier, monospace;
+            color: #333;
+            text-align: center;
+            border: 1px dashed #dcd6a8;
+            transform: rotate(-3deg);
+            max-width: 320px;
+        }
+
+        .papel-amassado h2 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .papel-amassado p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Tela do Coração Roxinho */
+        #tela-coracao {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(27, 79, 114, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .coracao-gigante {
+            font-size: 120px;
+            animation: pulsar 1.2s infinite alternate;
+            filter: drop-shadow(0 0 25px rgba(155, 89, 182, 0.9));
+        }
+
+        @keyframes pulsar {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        .texto-especial {
+            font-size: 20px;
+            max-width: 500px;
+            line-height: 1.6;
+            margin-top: 15px;
+            font-family: 'Georgia', serif;
+            color: #f7f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hud">
+        <div class="hud-item">Balões: <span id="placar">0</span>/5</div>
+        <div class="hud-item">Tempo: <span id="tempo">10</span>s</div>
+    </div>
+
+    <div id="area-jogo"></div>
+
+    <div id="contador-inicial">1</div>
+
+    <div id="tela-mensagem" class="tela-centro">
+        <h1 id="texto-fim">O tempo acabou!</h1>
+        <button class="btn-estilizado" onclick="iniciarFluxoJogo()">Tentar de Novo</button>
+    </div>
+
+    <div id="container-egg">
+        <div id="ovo" class="ovo-gigante"></div>
+        <div id="personagem-recompensa">
+            <div class="avatar-boneco">💜</div>
+            <div class="papel-amassado">
+                <h2>BEM-VINDO!</h2>
+                <p>Parabéns vc ganhou o jogo e vai ganhar mais outro jogo no próximo final de semana!</p>
+                <button class="btn-estilizado" style="margin-top: 15px; padding: 8px 20px; font-size: 14px;" onclick="mostrarCoracao()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tela-coracao">
+        <div class="coracao-gigante">💜</div>
+        <div class="texto-especial">
+            "Você é muito especial pra mim. Gosto muito de ter você na minha vida e de cada momento ao seu lado. Espero fazer momentos lindos com você."
+        </div>
+        <h3 style="margin-top: 15px; font-weight: normal; font-size: 18px;">Até o próximo final de semana!</h3>
+        <button class="btn-estilizado" style="margin-top: 15px;" onclick="reiniciarTudo()">Jogar Novamente</button>
+    </div>
+
+    <script>
+        let placar = 0;
+        let tempo = 10;
+        let intervaloTempo;
+        let intervaloBalao;
+        let jogoAtivo = false;
+
+        const elementoPlacar = document.getElementById('placar');
+        const elementoTempo = document.getElementById('tempo');
+        const areaJogo = document.getElementById('area-jogo');
+        const telaMensagem = document.getElementById('tela-mensagem');
+        const textoFim = document.getElementById('texto-fim');
+        const contadorInicial = document.getElementById('contador-inicial');
+        const containerEgg = document.getElementById('container-egg');
+        const ovo = document.getElementById('ovo');
+        const personagemRecompensa = document.getElementById('personagem-recompensa');
+        const telaCoracao = document.getElementById('tela-coracao');
+
+        function iniciarFluxoJogo() {
+            telaMensagem.style.display = 'none';
+            telaCoracao.style.display = 'none';
+            containerEgg.style.display = 'none';
+            personagemRecompensa.classList.remove('crescer');
+            personagemRecompensa.style.display = 'none';
+            
+            // Contagem de 1 a 5 antes de começar
+            let count = 1;
+            contadorInicial.style.display = 'block';
+            contadorInicial.innerText = count;
+
+            let intervalCount = setInterval(() => {
+                count++;
+                if (count <= 5) {
+                    contadorInicial.innerText = count;
+                } else {
+                    clearInterval(intervalCount);
+                    contadorInicial.style.display = 'none';
+                    comecarJogoReal();
+                }
+            }, 800);
+        }
+
+        function comecarJogoReal() {
+            placar = 0;
+            tempo = 10;
+            jogoAtivo = true;
+            
+            elementoPlacar.innerText = placar;
+            elementoTempo.innerText = tempo;
+            areaJogo.innerHTML = '';
+
+            clearInterval(intervaloTempo);
+            clearInterval(intervaloBalao);
+            
+            iniciarContagemRegressiva();
+            criarBalao();
+            intervaloBalao = setInterval(criarBalao, 700);
+        }
+
+        function iniciarContagemRegressiva() {
+            intervaloTempo = setInterval(() => {
+                if (!jogoAtivo) return;
+
+                tempo--;
+                elementoTempo.innerText = tempo;
+
+                if (tempo <= 0) {
+                    gameOver(false);
+                }
+            }, 1000);
+        }
+
+        function criarBalao() {
+            if (!jogoAtivo) return;
+
+            const balao = document.createElement('div');
+            balao.classList.add('balao');
+
+            const larguraJanela = window.innerWidth - 70;
+            const alturaJanela = window.innerHeight - 90;
+            const x = Math.random() * larguraJanela;
+            const y = Math.random() * alturaJanela;
+
+            balao.style.left = `${x}px`;
+            balao.style.top = `${y}px`;
+
+            balao.addEventListener('click', function() {
+                if (!jogoAtivo) return;
+                estourarBalao(this);
+            });
+
+            areaJogo.appendChild(balao);
+
+            setTimeout(() => {
+                if (areaJogo.contains(balao)) {
+                    balao.remove();
+                }
+            }, 1800);
+        }
+
+        function estourarBalao(elemento) {
+            placar++;
+            elementoPlacar.innerText = placar;
+            elemento.classList.add('estourando');
+            
+            setTimeout(() => {
+                elemento.remove();
+            }, 100);
+
+            if (placar >= 5) {
+                gameOver(true);
+            }
+        }
+
+        function gameOver(vitoria) {
+            jogoAtivo = false;
+            clearInterval(intervaloTempo);
+            clearInterval(intervaloBalao);
+            areaJogo.innerHTML = '';
+            
+            if (vitoria) {
+                lancarOvoGigante();
+            } else {
+                textoFim.innerText = "O tempo acabou!";
+                telaMensagem.style.display = 'block';
+            }
+        }
+
+        function lancarOvoGigante() {
+            containerEgg.style.display = 'flex';
+            ovo.style.top = '-200px';
+            ovo.classList.remove('ovo-quebrado');
+            
+            setTimeout(() => {
+                ovo.style.top = 'calc(50% - 90px)';
+            }, 100);
+
+            setTimeout(() => {
+                ovo.classList.add('ovo-quebrado');
+            }, 1100);
+
+            setTimeout(() => {
+                ovo.style.top = '-300px';
+                ovo.classList.remove('ovo-quebrado');
+                
+                personagemRecompensa.style.display = 'flex';
+                setTimeout(() => {
+                    personagemRecompensa.classList.add('crescer');
+                }, 50);
+            }, 2300);
+        }
+
+        function mostrarCoracao() {
+            containerEgg.style.display = 'none';
+            telaCoracao.style.display = 'flex';
+        }
+
+        function reiniciarTudo() {
+            telaCoracao.style.display = 'none';
+            iniciarFluxoJogo();
+        }
+
+        iniciarFluxoJogo();
+    </script>
+</body>
+</html>
