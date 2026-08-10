@@ -3,122 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo de Estourar Balões</title>
+    <title>Estoura Balões Divertido</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            /* Fundo azul solicitado */
-            background-color: #3498db;
-            font-family: Arial, sans-serif;
-            overflow: hidden; /* Evita barras de rolagem durante o jogo */
-            cursor: crosshair; /* Muda o cursor para uma mira */
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: crosshair;
+            user-select: none;
         }
 
         #area-jogo {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
 
-        /* O Balão (branco solicitado) */
+        /* HUD Moderno */
+        #hud {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
+        }
+
+        .hud-item span {
+            color: #f1c40f;
+        }
+
+        /* Balão Aprimorado (Branco com brilho 3D) */
         .balao {
             position: absolute;
-            width: 50px;
-            height: 65px;
-            background-color: white;
-            border-radius: 50% 50% 45% 50%; /* Formato de balão */
-            box-shadow: inset -5px -5px 0px rgba(0, 0, 0, 0.1); /* Efeito 3D leve */
-            transition: transform 0.1s; /* Efeito ao clicar */
+            width: 60px;
+            height: 75px;
+            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e0e0e0 60%, #bdc3c7 100%);
+            border-radius: 50% 50% 48% 50%;
+            box-shadow: inset -8px -10px 15px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s ease;
             cursor: pointer;
+            z-index: 5;
         }
 
-        /* O "nó" do balão */
         .balao::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -6px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-bottom: 8px solid white;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 9px solid #d5d8dc;
         }
 
-        /* Linha/Barbante do balão */
         .balao::before {
             content: '';
             position: absolute;
-            bottom: -15px;
+            bottom: -18px;
             left: 48%;
-            width: 1px;
-            height: 10px;
-            background-color: rgba(0, 0, 0, 0.3);
+            width: 2px;
+            height: 13px;
+            background-color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Efeito de estouro ao clicar */
         .balao.estourando {
-            transform: scale(1.5);
+            transform: scale(1.6);
             opacity: 0;
         }
 
-        /* Placar e Timer */
-        #hud {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            pointer-events: none; /* Para não atrapalhar os cliques */
-            z-index: 10;
-        }
-
-        /* Tela de Game Over / Vitoria */
-        #mensagem-tela {
-            display: none;
+        /* Tela de Contagem Regressiva e Mensagens */
+        .tela-centro {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            z-index: 20;
+            display: none;
+            max-width: 400px;
+            width: 90%;
         }
 
-        button {
+        .tela-centro h1 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 28px;
+        }
+
+        .btn-estilizado {
             margin-top: 20px;
-            padding: 10px 20px;
+            padding: 12px 30px;
             font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            background-color: #2ecc71;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        button:hover { background-color: #27ae60; }
 
+        .btn-estilizado:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(46, 204, 113, 0.6);
+        }
+
+        /* Animação do Ovo Gigante e do Personagem */
+        #container-egg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+            background: rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .ovo-gigante {
+            position: absolute;
+            top: -200px;
+            width: 140px;
+            height: 180px;
+            background: radial-gradient(circle at 40% 30%, #ffffff 0%, #ecf0f1 70%, #bdc3c7 100%);
+            border-radius: 50% 50% 48% 48%;
+            box-shadow: inset -15px -20px 30px rgba(0,0,0,0.2), 0 15px 30px rgba(0,0,0,0.4);
+            transition: top 1s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s ease;
+        }
+
+        .ovo-quebrado {
+            animation: tremer 0.2s ease infinite;
+        }
+
+        @keyframes tremer {
+            0% { transform: translate(2px, 2px) rotate(0deg); }
+            20% { transform: translate(-2px, -2px) rotate(-2deg); }
+            40% { transform: translate(-3px, 1px) rotate(2deg); }
+            60% { transform: translate(3px, 1px) rotate(0deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            100% { transform: translate(1px, 2px) rotate(-1deg); }
+        }
+
+        /* Personagem que sai do ovo crescendo */
+        #personagem-recompensa {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            transform: scale(0.1);
+            opacity: 0;
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease;
+        }
+
+        #personagem-recompensa.crescer {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .avatar-boneco {
+            font-size: 80px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+        }
+
+        .papel-amassado {
+            background: #fffdf0;
+            padding: 20px 25px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-family: 'Courier New', Courier, monospace;
+            color: #333;
+            text-align: center;
+            border: 1px dashed #dcd6a8;
+            transform: rotate(-3deg);
+            max-width: 280px;
+        }
+
+        .papel-amassado h2 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .papel-amassado p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Overlay do Coração Roxinho */
+        #tela-coracao {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 40;
+            color: white;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .coracao-gigante {
+            font-size: 120px;
+            animation: pulsar 1.2s infinite alternate;
+            filter: drop-shadow(0 0 20px rgba(155, 89, 182, 0.8));
+        }
+
+        @keyframes pulsar {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        #contador-inicial {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            z-index: 25;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <div id="hud">
-        Balões Estourados: <span id="placar">0</span> / 5 <br>
-        Tempo: <span id="tempo">10</span>s
+        <div class="hud-item">Balões: <span id="placar">0</span>/5</div>
+        <div class="hud-item">Tempo: <span id="tempo">10</span>s</div>
     </div>
 
-    <div id="area-jogo">
-        <!-- Os balões aparecerão aqui via JavaScript -->
+    <div id="area-jogo"></div>
+
+    <div id="contador-inicial">3</div>
+
+    <!-- Tela de Game Over / Reiniciar -->
+    <div id="tela-mensagem" class="tela-centro">
+        <h1 id="texto-fim">O tempo acabou!</h1>
+        <button class="btn-estilizado" onclick="iniciarFluxoJogo()">Tentar de Novo</button>
     </div>
 
-    <div id="mensagem-tela">
-        <h1 id="texto-fim">Fim de Jogo</h1>
-        <button onclick="iniciarJogo()">Jogar Novamente</button>
+    <!-- Tela do Ovo Gigante e Recompensa -->
+    <div id="container-egg">
+        <div id="ovo" class="ovo-gigante"></div>
+        <div id="personagem-recompensa">
+            <div class="avatar-boneco">🧑‍💼</div>
+            <div class="papel-amassado">
+                <h2>BEM-VINDO!</h2>
+                <p>Parabéns vc ganhou o jogo e vai ganhar mais outro jogo no próximo final de semana!</p>
+                <button class="btn-estilizado" style="margin-top: 15px; padding: 8px 20px; font-size: 14px;" onclick="mostrarCoracao()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela Final do Coração Roxinho -->
+    <div id="tela-coracao">
+        <div class="coracao-gigante">💜</div>
+        <h2 style="margin-top: 20px; font-size: 24px;">Até o próximo final de semana!</h2>
+        <button class="btn-estilizado" style="margin-top: 20px;" onclick="reiniciarTudo()">Jogar Novamente</button>
     </div>
 
     <script>
@@ -131,34 +314,55 @@
         const elementoPlacar = document.getElementById('placar');
         const elementoTempo = document.getElementById('tempo');
         const areaJogo = document.getElementById('area-jogo');
-        const mensagemTela = document.getElementById('mensagem-tela');
+        const telaMensagem = document.getElementById('tela-mensagem');
         const textoFim = document.getElementById('texto-fim');
+        const contadorInicial = document.getElementById('contador-inicial');
+        const containerEgg = document.getElementById('container-egg');
+        const ovo = document.getElementById('ovo');
+        const personagemRecompensa = document.getElementById('personagem-recompensa');
+        const telaCoracao = document.getElementById('tela-coracao');
 
-        // Função para iniciar ou reiniciar o jogo
-        function iniciarJogo() {
-            // Resetar variáveis
+        function iniciarFluxoJogo() {
+            telaMensagem.style.display = 'none';
+            telaCoracao.style.display = 'none';
+            containerEgg.style.display = 'none';
+            personagemRecompensa.classList.remove('crescer');
+            personagemRecompensa.style.display = 'none';
+            
+            // Sequência 1, 2, 3, 4, 5 solicitada antes de começar
+            let count = 1;
+            contadorInicial.style.display = 'block';
+            contadorInicial.innerText = count;
+
+            let intervalCount = setInterval(() => {
+                count++;
+                if (count <= 5) {
+                    contadorInicial.innerText = count;
+                } else {
+                    clearInterval(intervalCount);
+                    contadorInicial.style.display = 'none';
+                    comecarJogoReal();
+                }
+            }, 800);
+        }
+
+        function comecarJogoReal() {
             placar = 0;
-            tempo = 10;
+            tempo = 9;
             jogoAtivo = true;
             
-            // Atualizar HUD
             elementoPlacar.innerText = placar;
             elementoTempo.innerText = tempo;
-            
-            // Esconder mensagem e limpar balões antigos
-            mensagemTela.style.display = 'none';
             areaJogo.innerHTML = '';
 
-            // Iniciar contadores
             clearInterval(intervaloTempo);
             clearInterval(intervaloBalao);
             
             iniciarContagemRegressiva();
-            criarBalao(); // Cria o primeiro imediatamente
-            intervaloBalao = setInterval(criarBalao, 800); // Cria um novo a cada 0.8s
+            criarBalao();
+            intervaloBalao = setInterval(criarBalao, 700);
         }
 
-        // Função do Timer
         function iniciarContagemRegressiva() {
             intervaloTempo = setInterval(() => {
                 if (!jogoAtivo) return;
@@ -167,89 +371,106 @@
                 elementoTempo.innerText = tempo;
 
                 if (tempo <= 0) {
-                    gameOver(false); // Perdeu por tempo
+                    gameOver(false);
                 }
             }, 1000);
         }
 
-        // Função para criar um balão na tela
         function criarBalao() {
             if (!jogoAtivo) return;
 
             const balao = document.createElement('div');
             balao.classList.add('balao');
 
-            // Posição aleatória (respeitando as bordas)
-            const larguraJanela = window.innerWidth - 60;
-            const alturaJanela = window.innerHeight - 80;
+            const larguraJanela = window.innerWidth - 70;
+            const alturaJanela = window.innerHeight - 90;
             const x = Math.random() * larguraJanela;
             const y = Math.random() * alturaJanela;
 
             balao.style.left = `${x}px`;
             balao.style.top = `${y}px`;
 
-            // Evento de clique no balão
             balao.addEventListener('click', function() {
                 if (!jogoAtivo) return;
-                
                 estourarBalao(this);
             });
 
             areaJogo.appendChild(balao);
 
-            // O balão some sozinho após 2 segundos se não for clicado
             setTimeout(() => {
                 if (areaJogo.contains(balao)) {
                     balao.remove();
                 }
-            }, 2000);
+            }, 1800);
         }
 
-        // Função ao clicar no balão
         function estourarBalao(elemento) {
-            jogoAtivo = false; // Pausa breve para animação
             placar++;
             elementoPlacar.innerText = placar;
-            
             elemento.classList.add('estourando');
-            
-            // Toca som (opcional, removido para simplicidade)
             
             setTimeout(() => {
                 elemento.remove();
-                if (placar < 5) {
-                    jogoAtivo = true; // Retoma o jogo
-                }
-            }, 100); // Tempo da animação CSS
+            }, 100);
 
-            // Verificar vitória
             if (placar >= 5) {
                 gameOver(true);
             }
         }
 
-        // Fim de jogo (Vitória ou Derrota)
         function gameOver(vitoria) {
             jogoAtivo = false;
             clearInterval(intervaloTempo);
             clearInterval(intervaloBalao);
-            
-            // Limpar balões restantes
             areaJogo.innerHTML = '';
-
-            mensagemTela.style.display = 'block';
+            
             if (vitoria) {
-                textoFim.innerText = "Você Venceu! Parabéns!";
-                textoFim.style.color = "#2ecc71";
+                lancarOvoGigante();
             } else {
                 textoFim.innerText = "O tempo acabou!";
-                textoFim.style.color = "#e74c3c";
+                telaMensagem.style.display = 'block';
             }
         }
 
-        // Iniciar o jogo ao carregar a página
-        iniciarJogo();
+        // Animação do ovo caindo, quebrando e crescendo a pessoa
+        function lancarOvoGigante() {
+            containerEgg.style.display = 'flex';
+            ovo.style.top = '-200px';
+            ovo.classList.remove('ovo-quebrado');
+            
+            setTimeout(() => {
+                ovo.style.top = 'calc(50% - 90px)'; // Cai no centro
+            }, 100);
 
+            // Quando o ovo chega, começa a tremer e quebrar
+            setTimeout(() => {
+                ovo.classList.add('ovo-quebrado');
+            }, 1100);
+
+            // O ovo some e a pessoa surge crescendo
+            setTimeout(() => {
+                ovo.style.top = '-300px'; // some pra cima
+                ovo.classList.remove('ovo-quebrado');
+                
+                personagemRecompensa.style.display = 'flex';
+                setTimeout(() => {
+                    personagemRecompensa.classList.add('crescer');
+                }, 50);
+            }, 2300);
+        }
+
+        function mostrarCoracao() {
+            containerEgg.style.display = 'none';
+            telaCoracao.style.display = 'flex';
+        }
+
+        function reiniciarTudo() {
+            telaCoracao.style.display = 'none';
+            iniciarFluxoJogo();
+        }
+
+        // Iniciar assim que carregar a página
+        iniciarFluxoJogo();
     </script>
 </body>
 </html>
