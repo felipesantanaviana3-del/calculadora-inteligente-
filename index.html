@@ -1,4 +1,622 @@
-<title>RotaViva | Turismo e Viagens</title> <style> :root { --green: #123c35; --green2: #1d594c; --gold: #d8ad69; --cream: #f8f7f2; --dark: #172b27; } * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; } body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--cream); } header { height: 82px; padding: 0 8%; display: flex; align-items: center; justify-content: space-between; background: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 3px 20px #00000009; } .logo { font-size: 25px; font-weight: 800; color: var(--green); } .logo span { color: var(--gold); } nav { display: flex; align-items: center; gap: 30px; } nav a { color: #394943; text-decoration: none; font-size: 14px; font-weight: 600; } nav a:hover { color: var(--gold); } .nav-btn { background: var(--green); color: white; padding: 13px 22px; border-radius: 7px; text-decoration: none; font-size: 13px; font-weight: 700; } .menu { display: none; font-size: 28px; cursor: pointer; background: none; border: none; } .hero { min-height: 590px; display: flex; align-items: center; padding: 80px 9%; color: white; background: linear-gradient(90deg, rgba(8,32,27,.88), rgba(8,32,27,.12)), url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2000&q=90') center/cover; } .hero-content { max-width: 650px; } .tag { color: var(--gold); letter-spacing: 3px; font-size: 12px; font-weight: 800; margin-bottom: 22px; } .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 6vw, 68px); line-height: 1.12; margin-bottom: 22px; } .hero p { font-size: 16px; line-height: 1.8; color: #e4eae6; max-width: 490px; margin-bottom: 32px; } .btn { display: inline-block; padding: 16px 27px; border-radius: 6px; background: var(--gold); color: #1c302a; text-decoration: none; font-weight: 800; border: none; cursor: pointer; transition: .3s; } .btn:hover { transform: translateY(-4px); background: #e9c58d; } section { padding: 85px 8%; } .section-title { text-align: center; margin-bottom: 45px; } .section-title span { color: #b58a4d; font-size: 12px; font-weight: 800; letter-spacing: 3px; } .section-title h2 { font-family: 'Playfair Display', serif; font-size: 39px; color: var(--green); margin: 12px 0; } .section-title p { color: #75817a; font-size: 14px; } .search-box { max-width: 850px; margin: -38px auto 0; position: relative; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 40px #00000015; display: flex; gap: 15px; flex-wrap: wrap; z-index: 2; } .search-box input { flex: 1; min-width: 180px; padding: 14px; border: 1px solid #e4e8e4; border-radius: 6px; outline: none; font: inherit; } .search-box button { padding: 14px 25px; border: none; background: var(--green); color: white; border-radius: 6px; font-weight: 700; cursor: pointer; } .destinations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; } .destination { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px #00000008; transition: .3s; } .destination:hover { transform: translateY(-8px); box-shadow: 0 15px 35px #00000015; } .destination img { width: 100%; height: 240px; object-fit: cover; } .destination-info { padding: 23px; } .destination-info small { color: #ad844a; font-weight: 800; letter-spacing: 1px; } .destination-info h3 { font-family: 'Playfair Display', serif; color: var(--green); font-size: 24px; margin: 9px 0; } .destination-info p { font-size: 13px; color: #78827d; line-height: 1.7; } .price { display: block; margin-top: 18px; color: var(--green); font-size: 19px; font-weight: 800; } .price small { color: #8b958f; font-size: 11px; } .about { background: var(--green); color: white; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; } .about img { width: 100%; height: 420px; object-fit: cover; border-radius: 12px; } .about span { color: var(--gold); letter-spacing: 3px; font-size: 12px; font-weight: 800; } .about h2 { font-family: 'Playfair Display', serif; font-size: 40px; margin: 20px 0; } .about p { color: #d0ddd6; line-height: 1.9; font-size: 14px; margin-bottom: 25px; } .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; text-align: center; } .feature { padding: 30px 20px; background: white; border-radius: 10px; } .feature .icon { font-size: 32px; margin-bottom: 15px; } .feature h3 { color: var(--green); margin-bottom: 10px; } .feature p { font-size: 13px; color: #7b8580; line-height: 1.7; } .contact { background: #eeeee7; } .contact-form { max-width: 650px; margin: auto; background: white; padding: 35px; border-radius: 12px; } .contact-form input, .contact-form textarea { width: 100%; padding: 15px; border: 1px solid #e1e5df; border-radius: 6px; margin-bottom: 15px; font: inherit; outline: none; } .contact-form textarea { min-height: 120px; resize: vertical; } .contact-form button { width: 100%; } footer { background: #0d2924; color: white; padding: 45px 8%; text-align: center; } footer p { font-size: 13px; color: #b9c9c1; margin-top: 12px; } footer .logo { color: white; } #message { margin-top: 15px; color: var(--green); font-weight: 700; text-align: center; } @media(max-width: 800px) { header { padding: 0 5%; } .menu { display: block; } nav { display: none; position: absolute; top: 82px; left: 0; width: 100%; background: white; padding: 25px; flex-direction: column; } nav.active { display: flex; } .destinations { grid-template-columns: 1fr; } .about { grid-template-columns: 1fr; } .about img { height: 280px; } .features { grid-template-columns: 1fr; } section { padding: 65px 6%; } .hero { min-height: 540px; padding: 60px 7%; } .section-title h2 { font-size: 32px; } } </style>
-RotaViva.
 
-    
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RotaViva | Turismo e Viagens</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #123c35;
+  --green2: #1d594c;
+  --gold: #d8ad69;
+  --cream: #f8f7f2;
+  --dark: #172b27;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--dark);
+  background: var(--cream);
+}
+
+header {
+  height: 82px;
+  padding: 0 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 3px 20px #00000009;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 800;
+  color: var(--green);
+}
+
+.logo span { color: var(--gold); }
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+nav a {
+  color: #394943;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+nav a:hover { color: var(--gold); }
+
+.nav-btn {
+  background: var(--green);
+  color: white;
+  padding: 13px 22px;
+  border-radius: 7px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.menu {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.hero {
+  min-height: 590px;
+  display: flex;
+  align-items: center;
+  padding: 80px 9%;
+  color: white;
+  background:
+  linear-gradient(90deg, rgba(8,32,27,.88), rgba(8,32,27,.12)),
+  url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2000&q=90') center/cover;
+}
+
+.hero-content { max-width: 650px; }
+
+.tag {
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 6vw, 68px);
+  line-height: 1.12;
+  margin-bottom: 22px;
+}
+
+.hero p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #e4eae6;
+  max-width: 490px;
+  margin-bottom: 32px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 16px 27px;
+  border-radius: 6px;
+  background: var(--gold);
+  color: #1c302a;
+  text-decoration: none;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  background: #e9c58d;
+}
+
+section { padding: 85px 8%; }
+
+.section-title {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.section-title span {
+  color: #b58a4d;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.section-title h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 39px;
+  color: var(--green);
+  margin: 12px 0;
+}
+
+.section-title p {
+  color: #75817a;
+  font-size: 14px;
+}
+
+.search-box {
+  max-width: 850px;
+  margin: -38px auto 0;
+  position: relative;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px #00000015;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+
+.search-box input {
+  flex: 1;
+  min-width: 180px;
+  padding: 14px;
+  border: 1px solid #e4e8e4;
+  border-radius: 6px;
+  outline: none;
+  font: inherit;
+}
+
+.search-box button {
+  padding: 14px 25px;
+  border: none;
+  background: var(--green);
+  color: white;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.destinations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.destination {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px #00000008;
+  transition: .3s;
+}
+
+.destination:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px #00000015;
+}
+
+.destination img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.destination-info { padding: 23px; }
+
+.destination-info small {
+  color: #ad844a;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.destination-info h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--green);
+  font-size: 24px;
+  margin: 9px 0;
+}
+
+.destination-info p {
+  font-size: 13px;
+  color: #78827d;
+  line-height: 1.7;
+}
+
+.price {
+  display: block;
+  margin-top: 18px;
+  color: var(--green);
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.price small {
+  color: #8b958f;
+  font-size: 11px;
+}
+
+.about {
+  background: var(--green);
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.about img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.about span {
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.about h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+  margin: 20px 0;
+}
+
+.about p {
+  color: #d0ddd6;
+  line-height: 1.9;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  text-align: center;
+}
+
+.feature {
+  padding: 30px 20px;
+  background: white;
+  border-radius: 10px;
+}
+
+.feature .icon {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.feature h3 {
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 13px;
+  color: #7b8580;
+  line-height: 1.7;
+}
+
+.contact {
+  background: #eeeee7;
+}
+
+.contact-form {
+  max-width: 650px;
+  margin: auto;
+  background: white;
+  padding: 35px;
+  border-radius: 12px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #e1e5df;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font: inherit;
+  outline: none;
+}
+
+.contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contact-form button {
+  width: 100%;
+}
+
+footer {
+  background: #0d2924;
+  color: white;
+  padding: 45px 8%;
+  text-align: center;
+}
+
+footer p {
+  font-size: 13px;
+  color: #b9c9c1;
+  margin-top: 12px;
+}
+
+footer .logo { color: white; }
+
+#message {
+  margin-top: 15px;
+  color: var(--green);
+  font-weight: 700;
+  text-align: center;
+}
+
+@media(max-width: 800px) {
+  header { padding: 0 5%; }
+  .menu { display: block; }
+  nav {
+    display: none;
+    position: absolute;
+    top: 82px;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 25px;
+    flex-direction: column;
+  }
+  nav.active { display: flex; }
+  .destinations { grid-template-columns: 1fr; }
+  .about { grid-template-columns: 1fr; }
+  .about img { height: 280px; }
+  .features { grid-template-columns: 1fr; }
+  section { padding: 65px 6%; }
+  .hero { min-height: 540px; padding: 60px 7%; }
+  .section-title h2 { font-size: 32px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Rota<span>Viva.</span></div>
+
+  <button class="menu" onclick="toggleMenu()" aria-label="Abrir menu">☰</button>
+
+  <nav id="nav">
+    <a href="#inicio" onclick="closeMenu()">Início</a>
+    <a href="#destinos" onclick="closeMenu()">Destinos</a>
+    <a href="#sobre" onclick="closeMenu()">Sobre nós</a>
+    <a href="#servicos" onclick="closeMenu()">Serviços</a>
+    <a href="#contato" class="nav-btn" onclick="closeMenu()">Fale conosco</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <div class="tag">DESCUBRA O MUNDO COM A GENTE</div>
+    <h1>Sua próxima história começa com uma viagem.</h1>
+    <p>Explore destinos incríveis, conheça novas culturas e viva experiências inesquecíveis com a RotaViva Turismo.</p>
+    <a href="#destinos" class="btn">Explorar destinos →</a>
+  </div>
+</section>
+
+<div class="search-box">
+  <input id="search" type="text" placeholder="Qual destino você deseja conhecer?">
+  <button onclick="searchDestination()">Buscar destino</button>
+</div>
+
+<section id="destinos">
+  <div class="section-title">
+    <span>DESTINOS ESPECIAIS</span>
+    <h2>Encontre sua próxima aventura</h2>
+    <p>Selecionamos lugares incríveis para sua próxima viagem.</p>
+  </div>
+
+  <div class="destinations" id="cards">
+
+    <article class="destination" data-name="Rio de Janeiro Brasil">
+      <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=900&q=85" alt="Rio de Janeiro">
+      <div class="destination-info">
+        <small>BRASIL • PRAIAS</small>
+        <h3>Rio de Janeiro</h3>
+        <p>Conheça paisagens maravilhosas, praias famosas e uma cultura vibrante.</p>
+        <span class="price">A partir de R$ 899 <small>/ pessoa</small></span>
+      </div>
+    </article>
+
+    <article class="destination" data-name="Paris França">
+      <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=85" alt="Paris">
+      <div class="destination-info">
+        <small>FRANÇA • CULTURA</small>
+        <h3>Paris</h3>
+        <p>Descubra a cidade da luz, seus monumentos e sua arquitetura encantadora.</p>
+        <span class="price">A partir de R$ 4.500 <small>/ pessoa</small></span>
+      </div>
+    </article>
+
+    <article class="destination" data-name="Maldivas Ilhas">
+      <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=900&q=85" alt="Maldivas">
+      <div class="destination-info">
+        <small>MALDIVAS • PARAÍSO</small>
+        <h3>Ilhas Maldivas</h3>
+        <p>Relaxe em águas cristalinas e aproveite paisagens paradisíacas.</p>
+        <span class="price">A partir de R$ 6.900 <small>/ pessoa</small></span>
+      </div>
+    </article>
+
+    <article class="destination" data-name="Japão Tóquio">
+      <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=900&q=85" alt="Tóquio">
+      <div class="destination-info">
+        <small>JAPÃO • TECNOLOGIA</small>
+        <h3>Tóquio</h3>
+        <p>Uma mistura fascinante de tradição, tecnologia e modernidade.</p>
+        <span class="price">A partir de R$ 5.800 <small>/ pessoa</small></span>
+      </div>
+    </article>
+
+    <article class="destination" data-name="Fernando de Noronha Brasil">
+      <img src="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=900&q=85" alt="Praia tropical">
+      <div class="destination-info">
+        <small>BRASIL • NATUREZA</small>
+        <h3>Fernando de Noronha</h3>
+        <p>Descubra praias preservadas e uma natureza impressionante.</p>
+        <span class="price">A partir de R$ 2.300 <small>/ pessoa</small></span>
+      </div>
+    </article>
+
+    <article class="destination" data-name="Suíça Alpes">
+      <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=900&q=85" alt="Montanhas">
+      <div class="destination-info">
+        <small>SUÍÇA • MONTANHAS</small>
+        <h3>Alpes Suíços</h3>
+        <p>Explore montanhas incríveis e paisagens que parecem de cinema.</p>
+        <span class="price">A partir de R$ 7.200 <small>/ pessoa</small></span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="about" id="sobre">
+  <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1000&q=85" alt="Paisagem de viagem">
+
+  <div>
+    <span>QUEM SOMOS</span>
+    <h2>Mais do que viagens. Criamos experiências.</h2>
+    <p>A RotaViva Turismo nasceu com o propósito de tornar cada viagem especial. Trabalhamos para ajudar pessoas a descobrir novos destinos, conhecer culturas e criar memórias que duram para sempre.</p>
+    <p>Nosso compromisso é oferecer praticidade, confiança e atendimento de qualidade em cada etapa da sua experiência.</p>
+    <a href="#contato" class="btn">Conheça nossos serviços</a>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="section-title">
+    <span>NOSSOS SERVIÇOS</span>
+    <h2>Viajar ficou mais fácil</h2>
+    <p>Planejamos tudo para você aproveitar cada momento.</p>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <div class="icon">✈️</div>
+      <h3>Passagens aéreas</h3>
+      <p>Ajuda para encontrar opções de voos para diferentes destinos.</p>
+    </div>
+
+    <div class="feature">
+      <div class="icon">🏨</div>
+      <h3>Hospedagem</h3>
+      <p>Opções de hospedagem para deixar sua viagem mais confortável.</p>
+    </div>
+
+    <div class="feature">
+      <div class="icon">🌍</div>
+      <h3>Pacotes turísticos</h3>
+      <p>Planejamento de viagens nacionais e internacionais.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contato">
+  <div class="section-title">
+    <span>FALE COM A GENTE</span>
+    <h2>Vamos planejar sua viagem?</h2>
+    <p>Envie seus dados e conte para onde deseja viajar.</p>
+  </div>
+
+  <form class="contact-form" id="contactForm">
+    <input type="text" id="name" placeholder="Seu nome completo" required>
+    <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+    <input type="text" id="destination" placeholder="Destino desejado" required>
+    <textarea id="details" placeholder="Conte um pouco sobre sua viagem..."></textarea>
+    <button type="submit" class="btn">Solicitar orçamento →</button>
+    <div id="message"></div>
+  </form>
+</section>
+</main>
+
+<footer>
+  <div class="logo">Rota<span>Viva.</span></div>
+  <p>Transformando destinos em histórias inesquecíveis.</p>
+  <p>© 2026 RotaViva Turismo. Projeto demonstrativo.</p>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('nav').classList.toggle('active');
+}
+
+function closeMenu() {
+  document.getElementById('nav').classList.remove('active');
+}
+
+function searchDestination() {
+  const term = document.getElementById('search').value.toLowerCase().trim();
+  const cards = document.querySelectorAll('.destination');
+  let found = 0;
+
+  cards.forEach(card => {
+    const matches = card.dataset.name.toLowerCase().includes(term);
+    card.style.display = matches ? 'block' : 'none';
+    if (matches) found++;
+  });
+
+  if (!term) {
+    cards.forEach(card => card.style.display = 'block');
+    return;
+  }
+
+  document.getElementById('destinos').scrollIntoView();
+  
+  if (!found) {
+    alert('Nenhum destino encontrado. Tente outro nome!');
+  }
+}
+
+document.getElementById('search').addEventListener('keydown', e => {
+  if (e.key === 'Enter') searchDestination();
+});
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('name').value;
+  const destination = document.getElementById('destination').value;
+
+  document.getElementById('message').textContent =
+    `Obrigado, ${name}! Sua solicitação para ${destination} foi registrada nesta demonstração.`;
+
+  this.reset();
+});
+</script>
+
+</body>
+</html>
